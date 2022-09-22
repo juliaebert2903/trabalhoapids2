@@ -5,21 +5,21 @@ class LivrosRepository {
     constructor() {
     }
 
-    async save(ex) {
-        await Livros.create(ex);
+    async save(lv) {
+        await Livros.create(lv);
     }
 
     async random() {
-        const ex = await Livros.findOne({
+        const lv = await Livros.findOne({
             order: 
                 Sequelize.literal('random()')
         })
-        return ex;
+        return lv;
     }
 
     async detail(id) {
-        const ex = await Livros.findByPk(id)
-        return ex;
+        const lv = await Livros.findByPk(id)
+        return lv;
     }
 
     async list(autor) {

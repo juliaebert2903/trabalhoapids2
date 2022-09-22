@@ -39,7 +39,7 @@ app.get('/', (req, res) => {
         },
         users
     });
-    console.log("nao chega aqui... ateh a ide sabe disso");
+  
 });
 
 app.post('/users', (req, res) => {
@@ -53,7 +53,7 @@ app.post('/users', (req, res) => {
     return res.json(newUser)
 });
 
-app.put('/users/:name/hobbies', (req, res) => {
+app.put('/users/:name/books', (req, res) => {
     const { name } = req.params;    // busca o parametro name da URL
     const user = users.find(u => u.name == name);
     console.log({
@@ -61,8 +61,8 @@ app.put('/users/:name/hobbies', (req, res) => {
         quem: user
     });
     
-    const { hobbies } = req.body;
-    user.hobbies = hobbies;
+    const { books } = req.body;
+    user.books = books;
 
     return res.json(user);
 });
@@ -73,8 +73,8 @@ app.delete('/users/:name', (req, res) => {
     return res.status(201);
 })
 
-const exercisesRouter = require('./exercicios/routes');
-app.use('/exercicios', exercisesRouter);
+const booksRouter = require('./livros/routes');
+app.use('/livros', booksRouter);
 
 const usuariosRouter = require('./usuarios/routes');
 app.use('/usuarios', usuariosRouter);

@@ -1,13 +1,13 @@
 const { DataTypes, Model } = require('sequelize');
 
 const { sequelizeCon } = require('../config/db-config');
-const { Livro } = require('../livros/model');
+const { Livros } = require('../livros/model');
 const { Usuario } = require('./model');
 
 class Resposta extends Model {}
     
 Resposta.init({
-    id_exercicio: DataTypes.STRING,
+    id_livro: DataTypes.STRING,
     alternativa: DataTypes.STRING
 }, { 
     sequelize: sequelizeCon, 
@@ -16,14 +16,14 @@ Resposta.init({
 });
 
 Resposta.belongsTo(Usuario);
-Resposta.belongsTo(Livro, {
-    foreignKey: 'id_exercicio'
+Resposta.belongsTo(Livros, {
+    foreignKey: 'id_livro'
 });
 
 Usuario.hasMany(Resposta);
-Livro.hasMany(Resposta, 
+Livros.hasMany(Resposta, 
     {
-        foreignKey: 'id_exercicio'
+        foreignKey: 'id_livro'
     });
 
 sequelizeCon.sync();

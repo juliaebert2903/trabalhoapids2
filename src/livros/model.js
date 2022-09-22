@@ -13,9 +13,7 @@ Livros.init({
     autor: DataTypes.STRING,
     sinopse: DataTypes.STRING,
     lancamento: DataTypes.STRING,
-    genero: [{
-        nome_genero: DataTypes.STRING
-    }]
+    genero: DataTypes.JSON
 }, { 
     sequelize: sequelizeCon, 
     schema: 'b3',
