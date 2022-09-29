@@ -1,23 +1,36 @@
 // const LivrosRepository = require('./repositorio-memory');
-const LivrosRepository = require('./repositorio-sql');
+//const LivrosRepository = require('./repositorio-sql');
 const crypto = require('crypto');
+const { Livros, livro_genero } = require('./model');
+const { Genero }=require('../generos/model');
 
 class LivrosController {
 
     constructor() {
-        this.repository = new LivrosRepository();
+        //this.repository = new LivrosRepository();
     }
 
     async create(req, res) {
         console.log("ADD NOVO LIVRO");
         const ex = {  
             id: crypto.randomUUID(),
-            ...req.body,
-            autor: req.body.autor.toUpperCase()
+            ...req.body
+            // autor: req.body.autor.toUpperCase()
         };
 
-        await this.repository.save(ex);
+        await Livros.create(ex);
         
+        return res.json({
+            ex
+        });
+    }
+
+    async createLivroGenero(req, res){
+        console.log("ADD GENEROS NOS LIVROS")
+        const ex={
+            ...req.body
+        };
+        await livro_genero.create(ex)
         return res.json({
             ex
         });
@@ -29,10 +42,19 @@ class LivrosController {
     }
 
     async list(req, res) {
-        const autor = req.query.autor.toUpperCase();
-        const listagem = await this.repository.list(autor);
-        console.log(listagem)
-        return res.json(listagem);
+        try{
+            const livros=await Livros.findAndCountAll(
+                {
+                    include:[{
+                        model: Genero
+                    }]
+                }
+            );
+            console.log(`<pre>${JSON.stringify(livros, null, 2)}</pre>`);
+            res.status(200).json(livros);
+        }catch(err){
+            return res.status(400).json({err});
+        }
     }
 
     async detail(req, res) {

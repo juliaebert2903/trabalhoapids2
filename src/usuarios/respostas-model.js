@@ -26,6 +26,6 @@ Livros.hasMany(Resposta,
         foreignKey: 'id_livro'
     });
 
-sequelizeCon.sync();
+sequelizeCon.sync({ force: sync });
 
 module.exports = { Resposta };

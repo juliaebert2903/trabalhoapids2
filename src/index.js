@@ -29,54 +29,62 @@ const app = express();
 // DAS REQUISICOES COM JSON NO SEU BODY
 app.use(express.json());
 
-users = [];
+usuarios = [];
 
 app.get('/', (req, res) => {
     return res.json({
         system: {
-            nome: "Vini",
+            nome: "AnaClara-Julia",
             version: '0.0.1-SNAPSHOT'
         },
-        users
+        //usuarios
     });
   
 });
 
-app.post('/users', (req, res) => {
-    console.log("No server...");
-    console.log({ body: req.body })
-    const newUser = {
-        timestamp: new Date(),
-        ...req.body, // DESESTRUTURAÇÃO - CONSISTE EM DESMONTAR O MEU OBJ
-    };
-    users.push(newUser);
-    return res.json(newUser)
-});
+// app.post('/usuarios', (req, res) => {
+//     console.log("No server...");
+//     console.log({ body: req.body })
+//     const newUser = {
+//         timestamp: new Date(),
+//         ...req.body, // DESESTRUTURAÇÃO - CONSISTE EM DESMONTAR O MEU OBJ
+//     };
+//     usuarios.push(newUser);
+//     return res.json(newUser)
+// });
 
-app.put('/users/:name/books', (req, res) => {
-    const { name } = req.params;    // busca o parametro name da URL
-    const user = users.find(u => u.name == name);
-    console.log({
-        msg: "achei",
-        quem: user
-    });
+// app.put('/usuarios/:name/livros', (req, res) => {
+//     const { name } = req.params;    // busca o parametro name da URL
+//     const user = usuarios.find(u => u.name == name);
+//     console.log({
+//         msg: "achei",
+//         quem: user
+//     });
     
-    const { books } = req.body;
-    user.books = books;
+//     const { livros } = req.body;
+//     user.livros = livros;
 
-    return res.json(user);
-});
+//     return res.json(user);
+// });
 
-app.delete('/users/:name', (req, res) => {
-    const { name } = req.params;
-    users = users.filter(u => u.name !== name);
-    return res.status(201);
-})
+// app.delete('/usuarios/:name', (req, res) => {
+//     const { name } = req.params;
+//     usuarios = usuarios.filter(u => u.name !== name);
+//     return res.status(201);
+// })
 
-const booksRouter = require('./livros/routes');
-app.use('/livros', booksRouter);
+
+
+const livrosRouter = require('./livros/routes');
+app.use('/livros', livrosRouter);
 
 const usuariosRouter = require('./usuarios/routes');
 app.use('/usuarios', usuariosRouter);
+
+const generosRouter = require('./generos/routes');
+app.use('/generos', generosRouter);
+
+const autoresRouter = require('./autores/routes');
+app.use('/autores', autoresRouter);
 
 app.listen(3000, () => console.log("Listening at 3000"));

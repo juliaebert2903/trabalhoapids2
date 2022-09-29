@@ -1,6 +1,5 @@
 const { Usuario } = require('./model');
-const { Resposta } = require('./respostas-model');
-const crypto = require('crypto');
+const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 class UsuariosController {
@@ -10,18 +9,18 @@ class UsuariosController {
     }
 
     async create(req, res) {
-        // INPUT
-        const { email, senha, nome } = req.body;
+        // // INPUT
+        // const { email, senha, nome } = req.body;
 
-        // PROCESSAMENTO
-        const user = await Usuario.create({
-            email, senha, nome
-        });
+        // // PROCESSAMENTO
+        // const user = await Usuario.create({
+        //     email, senha, nome
+        // });
 
-        // RESPOSTA
-        return res.status(201).json(user);
+        // // RESPOSTA
+        // return res.status(201).json(user);
 
-        /*const userBody=req.body;
+        const userBody=req.body;
         const senha=bcrypt.hashSync(userBody.senha,10);
 
         const user={
@@ -32,7 +31,7 @@ class UsuariosController {
 
         await Usuario.create(user);
 
-        return res.status(201).json(user);*/
+        return res.status(201).json(user);
 
     }
 

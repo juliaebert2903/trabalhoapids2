@@ -7,14 +7,17 @@ class Usuario extends Model {}
 Usuario.init({
     email: {
         type: DataTypes.STRING,
-        primaryKey: true
+        primaryKey: true,
+        autoIncrement: false
     },
     nome: DataTypes.STRING,
     senha: DataTypes.STRING
 }, { 
     sequelize: sequelizeCon, 
-    schema: 'b3',
-    modelName: 'usuario'
+    schema: 'public',
+    modelName: 'usuario',
+    createdAt: false,
+    updatedAt: false
 });
 
 
